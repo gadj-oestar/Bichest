@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crypto Page{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+<div class="rectangle-48">
+    <div class="rectangle-43">
+        <span class="buy-crypto">Buy crypto</span>
+    </div>
+    <div class="rectangle-45">
+      <select class="crypto-dropdown">
+    <!-- Vérifie si la variable 'cryptos' est définie et contient au moins un élément -->
+    {% if cryptos is defined and cryptos|length > 0 %}
+        
+        <!-- Si la variable 'cryptos' contient des éléments, itère sur chaque crypto-monnaie -->
+        {% for crypto in cryptos %}
+            
+            <!-- Crée une option dans le menu déroulant pour chaque crypto-monnaie -->
+            <!-- L'attribut 'value' de l'option est défini sur l'ID de la crypto-monnaie -->
+            <!-- Le texte affiché dans l'option est le nom de la crypto-monnaie -->
+            <option value="{{ crypto.id }}">{{ crypto.name }}</option>
+        {% endfor %}
+        
+    {% else %}
+        
+        <!-- Si la variable 'cryptos' est vide ou non définie -->
+        <!-- Crée une option par défaut indiquant qu'aucune crypto-monnaie n'est disponible -->
+        <option value="">No cryptocurrencies available</option>
+    {% endif %}
+</select>
+    </div>
+    <div class="rectangle-46">
+        <span class="amount">0.00</span>
+        <span class="euro">Euro</span>
+    </div>
+    <button class="rectangle-47">
+        <span class="buy">Buy</span>
+    </button>
+</div>
+
+{% endblock %}

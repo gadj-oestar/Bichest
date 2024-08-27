@@ -1,0 +1,43 @@
+/* group7.css */
+
+/* Container for the table */
+.group7-container {
+    background-color: #808080; /* Fond gris pour le conteneur */
+    padding: 20px;
+    border-radius: 10px; /* Arrondir les coins du conteneur */
+}
+
+/* Table styles */
+.group7-container table {
+    width: 100%; /* Utilise toute la largeur du conteneur */
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.group7-container th, 
+.group7-container td {
+    padding: 15px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height:9px;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+
+.group7-container .btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+
+

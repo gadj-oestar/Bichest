@@ -1,0 +1,167 @@
+.main-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.group-7 {
+    width: 577px;
+    height: 605px;
+    margin: 100px auto 0 auto; /* Centré horizontalement avec une marge en haut */
+}
+
+.rectangle-1 {
+    box-sizing: border-box;
+    width: 577px;
+    height: 655px;
+    margin: 0 auto; /* Centré horizontalement */
+    background: #5D5C5C;
+    border: 1px solid rgba(106, 102, 102, 0.05);
+    margin-bottom: 60px;
+}
+
+.title {
+    width: 272.42px;
+    height: 38.78px;
+    margin: 128px auto 0 auto; /* Centré horizontalement avec une marge en haut */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    border: 1px solid #6A6666;
+}
+
+.username-label {
+    width: 134px;
+    height: 35px;
+    margin: 89px auto 0 auto; /* Centré horizontalement avec une marge en haut */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #FAF7F7;
+    margin-left:100px ;
+
+}
+
+input {
+    box-sizing: border-box;
+    width: 385.93px;
+    height: 41.37px;
+    margin: 10px auto; /* Centré horizontalement avec une petite marge en haut */
+    background: #DE982F;
+    border: 1px solid #6A6666;
+    margin-left: 100px;
+    border-radius: 10px;
+    
+}
+
+.password-label {
+    width: 127px;
+    height: 28px;
+    margin: 30px auto 0 auto; /* Centré horizontalement avec une marge en haut */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    margin-left:100px ;
+    font-size: 24px;
+    line-height: 29px;
+    color: #FAF7F7;
+}
+
+
+
+.register-button-container {
+    box-sizing: border-box;
+    height: 49.12px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.register-button {
+    width: 123.56px;
+    height: 20.57px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+/* Conteneur pour le bouton Agree Terms */
+
+
+/* Stylisation du champ Agree Terms (checkbox) */
+.register-button-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Stylisation du label associé à la checkbox */
+.register-button-container label {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+/* Stylisation du bouton de soumission */
+.btn{
+   
+    margin: 13px auto 0 auto;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #DE982F;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-left: 200px;
+    text-decoration: none;
+    
+}
+
+.btn-lg{
+    width: 100%;
+}
+
+
+
+
+.btne{
+    margin: 13px auto 0 auto;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #DE982F;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-left: 200px;
+    text-decoration: none;
+}
+
+/* Style pour l'affichage de l'utilisateur connecté */
+.info {
+    background-color: #2c3e50; /* Fond gris foncé */
+    padding: 10px 20px;
+    border-radius: 5px; /* Coins arrondis */
+    color: #ecf0f1; /* Texte de couleur claire */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+

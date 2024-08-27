@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <!-- Group 7 -->
+        <div class="group-7">
+            <!-- Rectangle 1 -->
+            <div class="rectangle-1">
+            
+            <!-- Titre -->
+            <div class="title">
+                Please sign in
+            </div>
+
+            <!-- Formulaire de connexion -->
+            <form method="post">
+                <!-- Affichage des erreurs -->
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                <!-- Affichage de l'utilisateur connecté -->
+                {% if app.user %}
+                    <div class="info">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                <!-- Label Email -->
+                <div class="label username-label">
+                   Email
+                </div>
+
+                <!-- Champ Email -->
+                <div class="input-field email-input">
+                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                </div>
+
+                <!-- Label Password -->
+                <div class="label password-label">
+                    Password
+                </div>
+
+                <!-- Champ Password -->
+                <div class="input-field password-input">
+                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                    <!-- Bouton pour afficher le mot de passe -->
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility()" >Show</button>
+                </div>
+
+                <!-- Token CSRF -->
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <!-- Bouton Soumettre -->
+                <div class="register-button">
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+            
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript pour afficher/masquer le mot de passe -->
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('password');
+            var toggleButton = document.querySelector('.toggle-password');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleButton.textContent = "Hide";
+            } else {
+                passwordField.type = "password";
+                toggleButton.textContent = "Show";
+            }
+        }
+    </script>
+{% endblock %}
