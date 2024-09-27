@@ -43,7 +43,7 @@
     width: 447px;
     height: 82px;
     margin: 30px auto;
-    background-color: #202020;
+    background-color: #333;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -55,8 +55,6 @@
     height: 40px;
     background-color: #333; /* Couleur de fond */
     color: #FFFFFF; /* Couleur du texte */
-    border: none;
-    border-radius: 10px; /* Coins arrondis */
     font-family: 'Inter', sans-serif;
     font-size: 18px;
     line-height: 24px;
@@ -64,8 +62,25 @@
     text-align: center;
     appearance: none; /* Enlever les styles par défaut du menu déroulant */
     cursor: pointer;
+    border: 1px solid #333 ;
+
 }
 
+.crypto1{
+    width: 20%; /* Ajustez la largeur selon vos besoins */
+    height: 40px;
+    color: #FFFFFF; /* Couleur du texte */
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 5px 10px;
+    text-align: center;
+    appearance: none; /* Enlever les styles par défaut du menu déroulant */
+    cursor: pointer;
+    background-color: #333;
+    border: 1px solid #333 ;
+    
+}
 .crypto-dropdown option {
     background-color: #333; /* Couleur de fond pour les options */
     color: #FFFFFF; /* Couleur du texte des options */

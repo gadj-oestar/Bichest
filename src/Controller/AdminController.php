@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Controller;
+<?php namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -9,13 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class AdminController extends AbstractController
 {
-     #[Route('/admin/users', name: 'admin_user_list')]
-    // #[Route('/admin/users', name: 'admin_user_list')]
-    // #[IsGranted('ROLE_ADMIN')] // Restrict access to users with ROLE_ADMIN
+    #[Route('/admin', name: 'admin_user_list')]
     public function userList(EntityManagerInterface $entityManager): Response
     {
         $users = $entityManager->getRepository(User::class)->findAll();
@@ -33,11 +28,12 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Utilisateur modifié avec succès !');
             return $this->redirectToRoute('admin_user_list');
         }
 
         return $this->render('admin/edit_user.html.twig', [
-            'form' => $form->createView(),  // Transmet le formulaire à la vue
+            'form' => $form->createView(),
         ]);
     }
 

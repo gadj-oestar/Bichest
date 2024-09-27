@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des Achats{% endblock %}
+
+{% block body %}
+<h1>Historique des Achats</h1>
+
+<table style="width:100%; border-collapse: collapse; margin: 20px 0; font-size: 1.1em; min-width: 400px;">
+    <thead>
+        <tr style="background-color: #009879; color: #ffffff; text-align: left;">
+            <th style="padding: 12px 15px;">ID</th>
+            <th style="padding: 12px 15px;">Crypto ID</th>
+            <th style="padding: 12px 15px;">Montant</th>
+            <th style="padding: 12px 15px;">Date d'Achat</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchase in purchases %}
+            <tr style="border-bottom: 1px solid #dddddd;">
+                <td style="padding: 12px 15px;">{{ purchase.id }}</td>
+                <td style="padding: 12px 15px;">{{ purchase.cryptoId }}</td>
+                <td style="padding: 12px 15px;">{{ purchase.amount }} €</td>
+                <td style="padding: 12px 15px;">{{ purchase.createdAt|date('Y-m-d') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" style="padding: 12px 15px; text-align: center;">Aucun achat trouvé</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

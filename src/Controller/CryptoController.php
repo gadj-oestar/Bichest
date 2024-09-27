@@ -24,7 +24,6 @@ class CryptoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_crypto_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')] // Only administrators can access this route
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $crypto = new Crypto();

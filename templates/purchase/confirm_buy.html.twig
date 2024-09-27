@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation d'Achat{% endblock %}
+
+{% block body %}
+<h1>Confirmation d'Achat</h1>
+
+<p>Vous êtes sur le point d'acheter {{ amount }} de {{ cryptoName }} ({{ cryptoSymbol }})</p>
+<p>Prix unitaire : {{ cryptoPrice }} €</p>
+<p>Valeur totale : {{ totalValue }} €</p>
+
+<form action="{{ path('app_confirm_buy') }}" method="POST">
+    <button type="submit">Confirmer l'achat</button>
+</form>
+
+{% endblock %}

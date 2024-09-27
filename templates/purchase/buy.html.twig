@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acheter des Cryptomonnaies{% endblock %}
+
+{% block body %}
+<h1 style="color: #FFFFFF;">Acheter des Cryptomonnaies</h1>
+
+<div class="form-block">
+    <form action="{{ path('app_buy_crypto') }}" method="POST">
+        <div class="rectangle-3">
+            <label for="crypto_id" class="text-white">Sélectionnez une cryptomonnaie :</label>
+          <select name="crypto_id" id="crypto_id" onchange="updatePrice()">
+    {% for crypto in cryptos %}
+        <option value="{{ crypto.id }}" data-price="{{ crypto.quote[currency].price }}">{{ crypto.name }} ({{ crypto.symbol }})</option>
+    {% endfor %}
+</select>
+
+        </div>
+
+        <div class="rectangle-3">
+            <label for="amount" class="text-white">Quantité :</label>
+            <input type="number" name="amount" id="amount" step="0.01" required>
+        </div>
+
+        <div class="rectangle-4">
+            <label for="total" class="text-white">Total :</label>
+            <input type="text" id="total" readonly>
+        </div>
+
+        <button type="submit" class="rectangle-2">Acheter</button>
+    </form>
+</div>
+
+<script>
+function updatePrice() {
+    const select = document.getElementById('crypto_id');
+    const amountInput = document.getElementById('amount');
+    const totalInput = document.getElementById('total');
+
+    const selectedCrypto = select.options[select.selectedIndex];
+    const price = selectedCrypto.dataset.price;
+
+    totalInput.value = (amountInput.value * price).toFixed(2);
+}
+
+document.getElementById('amount').addEventListener('input', updatePrice);
+</script>
+
+<style>
+    /* Styles pour le bloc du formulaire */
+    .form-block {
+        background-color: #060A2F; /* Couleur de fond du bloc */
+        padding: 20px; /* Espacement intérieur */
+        border-radius: 10px; /* Coins arrondis */
+        margin: 20px auto; /* Centrer le bloc */
+        width: 300px; /* Largeur fixe ou ajustable */
+        color: #FFFFFF; /* Couleur du texte */
+    }
+
+    /* Styles pour les éléments de formulaire */
+    .rectangle-3, .rectangle-4 {
+        box-sizing: border-box;
+        width: 100%; /* Pleine largeur */
+        border: 1px solid #FFFFFF; /* Bordure blanche */
+        border-radius: 4px; /* Coins arrondis */
+        margin-bottom: 20px; /* Espacement entre les champs */
+        padding: 10px; /* Espacement intérieur */
+        color: #060A2F; /* Texte foncé */
+    }
+
+    select, input[type="number"], input[type="text"] {
+        width: 100%; /* Pleine largeur */
+        border: 1px solid #FFFFFF; /* Bordure blanche */
+        border-radius: 4px; /* Coins arrondis */
+        color: #060A2F; /* Texte foncé */
+        margin-left:10px;
+    }
+
+    button.rectangle-2 {
+        width: 100%; /* Pleine largeur */
+        height: 40px; /* Hauteur du bouton */
+        background: #FFCB3B; /* Couleur de fond du bouton */
+        border-radius: 16px; /* Coins arrondis */
+        color: #FFFFFF; /* Couleur du texte */
+        border: none; /* Supprimer la bordure par défaut */
+        cursor: pointer; /* Changer le curseur pour indiquer le clic */
+    }
+
+    button.rectangle-2:hover {
+        background: #FFB700; /* Changement de couleur au survol */
+    }
+
+    label {
+        display: block; /* Chaque label sur une nouvelle ligne */
+        margin-bottom: 5px; /* Espacement sous chaque label */
+        color: #FFFFFF; /* Couleur du texte des labels */
+    }
+</style>
+
+{% endblock %}
