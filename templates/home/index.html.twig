@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h1 style="color: #FFFFFF;">Bienvenue sur la plateforme de Cryptomonnaies</h1>
+
+    <!-- Tableau des Cryptomonnaies -->
+    <div class="rectangle">
+        <div class="rectangle-header">
+            <span class="header header-name">Nom</span>
+            <span class="header header-price">Prix</span>
+            <span class="header header-change">Changement</span>
+            <span class="header header-volume">24h Volume</span>
+        </div>
+        <table>
+            <tbody>
+                {% for crypto in cryptos %}
+                    <tr>
+                        <td class="value value-name">{{ crypto.name }}</td>
+                        <td class="value value-price">{{ crypto.quote[currency].price | number_format(2, '.', ',') }} {{ currency }}</td>
+                        <td class="value value-change">{{ crypto.quote[currency].percent_change_24h | number_format(2, '.', ',') }} %</td>
+                        <td class="value value-volume">{{ crypto.quote[currency].volume_24h | number_format(0, '.', ',') }} {{ currency }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Conteneur Flex pour les sections d'achat et de vente -->
+    <div class="flex-container">
+        <!-- Section d'Achat -->
+        <div class="form-section">
+            <h2 style="color: #FFFFFF;">Acheter des Cryptomonnaies</h2>
+            <div class="form-block">
+                <form action="{{ path('app_buy_crypto') }}" method="POST" id="purchase-form">
+                    <div class="rectangle-3">
+                        <label for="crypto_id" class="text-white">Sélectionnez une cryptomonnaie :</label>
+                        <select name="crypto_id" id="crypto_id" onchange="updatePrice()" required>
+                            {% for crypto in cryptos %}
+                                <option value="{{ crypto.id }}" data-price="{{ crypto.quote[currency].price }}">{{ crypto.name }} ({{ crypto.symbol }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="rectangle-3">
+                        <label for="amount" class="text-white">Quantité :</label>
+                        <input type="number" name="amount" id="amount" step="0.01" required>
+                    </div>
+
+                    <div class="rectangle-4">
+                        <label for="total" class="text-white">Total :</label>
+                        <input type="text" id="total" readonly>
+                    </div>
+
+                    <button type="button" class="rectangle-2" onclick="checkRegistration('buy')">Acheter</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Section de Vente -->
+        <div class="form-section">
+            <h2 style="color: #FFFFFF;">Vendre des Cryptomonnaies</h2>
+            <div class="form-block">
+                <form action="{{ path('app_sell_crypto') }}" method="POST" id="sale-form">
+                    <div class="rectangle-3">
+                        <label for="crypto_id" class="text-white">Sélectionnez une cryptomonnaie :</label>
+                        <select name="crypto_id" id="crypto_id" onchange="updateTotal()" required>
+                            {% for crypto in cryptos %}
+                                <option value="{{ crypto.id }}" data-price="{{ crypto.quote[currency].price }}">{{ crypto.name }} ({{ crypto.symbol }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="rectangle-3">
+                        <label for="amount" class="text-white">Quantité :</label>
+                        <input type="number" name="amount" id="amount" step="0.01" required oninput="updateTotal()">
+                    </div>
+
+                    <div class="rectangle-4">
+                        <label for="total" class="text-white">Total :</label>
+                        <input type="text" id="total" readonly>
+                    </div>
+
+                    <button type="button" class="rectangle-2" onclick="checkRegistration('sell')">Vendre</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts pour la mise à jour des prix et affichage des alertes -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function updatePrice() {
+            const select = document.getElementById('crypto_id');
+            const amountInput = document.getElementById('amount');
+            const totalInput = document.getElementById('total');
+
+            const selectedCrypto = select.options[select.selectedIndex];
+            const price = selectedCrypto.dataset.price;
+
+            const amount = parseFloat(amountInput.value);
+            const priceValue = parseFloat(price);
+
+            if (!isNaN(amount) && amount > 0) {
+                totalInput.value = (priceValue * amount).toFixed(2) + ' {{ currency }}'; // Afficher le total
+            } else {
+                totalInput.value = ''; // Réinitialiser si la quantité n'est pas valide
+            }
+        }
+
+        function updateTotal() {
+            const select = document.getElementById('crypto_id');
+            const amountInput = document.getElementById('amount');
+            const totalInput = document.getElementById('total');
+
+            const selectedCrypto = select.options[select.selectedIndex];
+            const price = parseFloat(selectedCrypto.dataset.price);
+            const amount = parseFloat(amountInput.value);
+
+            if (!isNaN(amount) && amount > 0) {
+                totalInput.value = (price * amount).toFixed(2) + ' {{ currency }}'; // Afficher le total
+            } else {
+                totalInput.value = ''; // Réinitialiser si la quantité n'est pas valide
+            }
+        }
+
+        function checkRegistration(action) {
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                // L'utilisateur est connecté, soumettez le formulaire
+                if (action === 'buy') {
+                    document.getElementById('purchase-form').submit();
+                } else if (action === 'sell') {
+                    document.getElementById('sale-form').submit();
+                }
+            {% else %}
+                // L'utilisateur n'est pas connecté, montrez l'alerte SweetAlert
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Inscription requise',
+                    text: 'Vous devez vous inscrire pour acheter ou vendre des cryptomonnaies. Voulez-vous vous inscrire maintenant ?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui, s\'inscrire',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Rediriger vers la page d'inscription
+                        window.location.href = '{{ path('app_register') }}';
+                    }
+                });
+            {% endif %}
+        }
+
+        // Affichage de l'alerte SweetAlert après une vente réussie
+        {% if app.session.flashBag.has('success') %}
+            Swal.fire({
+                icon: 'success',
+                title: 'Vente réussie!',
+                text: '{{ app.session.flashBag.get('success')[0] }}',
+                confirmButtonText: 'OK'
+            });
+        {% endif %}
+    </script>
+
+    <style>
+       select, input[type="number"], input[type="text"] {
+            width: 100%; /* Pleine largeur */
+            border: 1px solid #FFFFFF; /* Bordure blanche */
+            border-radius: 4px; /* Coins arrondis */
+            color: #060A2F; /* Texte foncé */
+            margin-left: 10px;
+        }
+    </style>
+{% endblock %}

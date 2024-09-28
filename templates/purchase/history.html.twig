@@ -3,31 +3,64 @@
 {% block title %}Historique des Achats{% endblock %}
 
 {% block body %}
-<h1>Historique des Achats</h1>
+<h1 style="text-align: center;">Historique des Achats</h1>
 
-<table style="width:100%; border-collapse: collapse; margin: 20px 0; font-size: 1.1em; min-width: 400px;">
-    <thead>
-        <tr style="background-color: #009879; color: #ffffff; text-align: left;">
-            <th style="padding: 12px 15px;">ID</th>
-            <th style="padding: 12px 15px;">Crypto ID</th>
-            <th style="padding: 12px 15px;">Montant</th>
-            <th style="padding: 12px 15px;">Date d'Achat</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for purchase in purchases %}
-            <tr style="border-bottom: 1px solid #dddddd;">
-                <td style="padding: 12px 15px;">{{ purchase.id }}</td>
-                <td style="padding: 12px 15px;">{{ purchase.cryptoId }}</td>
-                <td style="padding: 12px 15px;">{{ purchase.amount }} €</td>
-                <td style="padding: 12px 15px;">{{ purchase.createdAt|date('Y-m-d') }}</td>
-            </tr>
-        {% else %}
+<div style="display: flex; justify-content: center; margin: 20px 0;">
+    <table class="purchase-table">
+        <thead>
             <tr>
-                <td colspan="4" style="padding: 12px 15px; text-align: center;">Aucun achat trouvé</td>
+                <th>ID</th>
+                <th>Crypto ID</th>
+                <th>Montant</th>
+                <th>Date d'Achat</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% if purchases is not empty %}
+                {% for purchase in purchases %}
+                    <tr>
+                        <td>{{ purchase.id }}</td>
+                        <td>{{ purchase.cryptoId }}</td>
+                        <td>{{ purchase.amount }} €</td>
+                        <td>{{ purchase.createdAt|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Aucun achat trouvé</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .purchase-table {
+        width: 100%; /* Pleine largeur */
+        max-width: 800px; /* Largeur maximale */
+        border-collapse: collapse; /* Fusionner les bordures */
+        margin-top: 20px; /* Espacement au-dessus du tableau */
+        font-size: 1.1em; /* Taille de police */
+    }
+
+    .purchase-table th, .purchase-table td {
+        border: 1px solid #dddddd; /* Bordure des cellules */
+        padding: 12px 15px; /* Espacement intérieur */
+        text-align: left; /* Alignement à gauche du texte */
+    }
+
+    .purchase-table th {
+        background-color: #009879; /* Couleur de fond pour l'en-tête */
+        color: #ffffff; /* Couleur du texte pour l'en-tête */
+    }
+
+    .purchase-table tr:nth-child(even) {
+        background-color: #f2f2f2; /* Couleur de fond pour les lignes paires */
+    }
+
+    .purchase-table tr:hover {
+        background-color: #ddd; /* Couleur de fond au survol */
+    }
+</style>
 
 {% endblock %}

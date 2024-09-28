@@ -33,8 +33,24 @@ class PurchaseService
         return $this->entityManager->getRepository(Purchase::class)->findAll();
     }
 
+    public function saveSale($cryptoId, $amount)
+    {
+        if ($amount <= 0) {
+            throw new \InvalidArgumentException('Le montant doit être supérieur à zéro.');
+        }
+
+        $sale = new Purchase();
+        $sale->setCryptoId($cryptoId);
+        $sale->setAmount($amount);
+        $sale->setType('sell');
+        $sale->setCreatedAt(new \DateTime());
+
+        $this->entityManager->persist($sale);
+        $this->entityManager->flush();
+    }
+
     public function getSales()
     {
-        return $this->entityManager->getRepository(Purchase::class)->findBy(['type' => 'sell']);
+        return $this->entityManager->getRepository(Purchase::class)->findAll();
     }
 }

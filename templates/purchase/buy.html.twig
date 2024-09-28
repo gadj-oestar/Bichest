@@ -6,15 +6,14 @@
 <h1 style="color: #FFFFFF;">Acheter des Cryptomonnaies</h1>
 
 <div class="form-block">
-    <form action="{{ path('app_buy_crypto') }}" method="POST">
+    <form action="{{ path('app_buy_crypto') }}" method="POST" id="purchase-form">
         <div class="rectangle-3">
             <label for="crypto_id" class="text-white">Sélectionnez une cryptomonnaie :</label>
-          <select name="crypto_id" id="crypto_id" onchange="updatePrice()">
-    {% for crypto in cryptos %}
-        <option value="{{ crypto.id }}" data-price="{{ crypto.quote[currency].price }}">{{ crypto.name }} ({{ crypto.symbol }})</option>
-    {% endfor %}
-</select>
-
+            <select name="crypto_id" id="crypto_id" onchange="updatePrice()" required>
+                {% for crypto in cryptos %}
+                    <option value="{{ crypto.id }}" data-price="{{ crypto.quote[currency].price }}">{{ crypto.name }} ({{ crypto.symbol }})</option>
+                {% endfor %}
+            </select>
         </div>
 
         <div class="rectangle-3">
@@ -31,6 +30,7 @@
     </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 function updatePrice() {
     const select = document.getElementById('crypto_id');
@@ -44,6 +44,16 @@ function updatePrice() {
 }
 
 document.getElementById('amount').addEventListener('input', updatePrice);
+
+// Affichage de l'alerte SweetAlert après un achat réussi
+{% if app.session.flashBag.has('success') %}
+    Swal.fire({
+        icon: 'success',
+        title: 'Achat réussi!',
+        text: '{{ app.session.flashBag.get('success')[0] }}',
+        confirmButtonText: 'OK'
+    });
+{% endif %}
 </script>
 
 <style>
@@ -55,6 +65,7 @@ document.getElementById('amount').addEventListener('input', updatePrice);
         margin: 20px auto; /* Centrer le bloc */
         width: 300px; /* Largeur fixe ou ajustable */
         color: #FFFFFF; /* Couleur du texte */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée */
     }
 
     /* Styles pour les éléments de formulaire */
@@ -66,6 +77,7 @@ document.getElementById('amount').addEventListener('input', updatePrice);
         margin-bottom: 20px; /* Espacement entre les champs */
         padding: 10px; /* Espacement intérieur */
         color: #060A2F; /* Texte foncé */
+        transition: all 0.3s; /* Transition pour les changements */
     }
 
     select, input[type="number"], input[type="text"] {
@@ -73,7 +85,7 @@ document.getElementById('amount').addEventListener('input', updatePrice);
         border: 1px solid #FFFFFF; /* Bordure blanche */
         border-radius: 4px; /* Coins arrondis */
         color: #060A2F; /* Texte foncé */
-        margin-left:10px;
+        margin-left: 10px;
     }
 
     button.rectangle-2 {

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des Ventes{% endblock %}
+
+{% block body %}
+<h1>Historique des Ventes</h1>
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">{{ message }}</div>
+{% endfor %}
+
+<table class="sales-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID de Cryptomonnaie</th>
+            <th>Montant</th>
+            <th>Date de Vente</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if sales is not empty %}
+            {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.id }}</td>
+                    <td>{{ sale.cryptoId }}</td>
+                    <td>{{ sale.amount }}</td>
+                    <td>{{ sale.createdAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4">Aucune vente enregistrée.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<a href="{{ path('app_sell_crypto') }}">Retourner à la page de vente</a>
+
+<style>
+    /* Styles pour le tableau des ventes */
+    .sales-table {
+        width: 100%; /* Pleine largeur */
+        border-collapse: collapse; /* Fusionner les bordures */
+        margin-top: 20px; /* Espacement au-dessus du tableau */
+    }
+
+    .sales-table th, .sales-table td {
+        border: 1px solid #FFFFFF; /* Bordure blanche */
+        padding: 10px; /* Espacement intérieur */
+        text-align: left; /* Alignement à gauche du texte */
+    }
+
+    .sales-table th {
+        background-color: #060A2F; /* Couleur de fond pour l'en-tête */
+        color: #FFFFFF; /* Couleur du texte pour l'en-tête */
+    }
+
+    .sales-table tr:nth-child(even) {
+        background-color: #f2f2f2; /* Couleur de fond pour les lignes paires */
+    }
+
+    .sales-table tr:hover {
+        background-color: #ddd; /* Couleur de fond au survol */
+    }
+
+    .alert {
+        margin: 20px 0; /* Espacement pour les alertes */
+    }
+</style>
+
+{% endblock %}
